@@ -67,3 +67,11 @@ Guide to building a proper android build server, for continous integration using
 
         sudo update-alternatives --config javac
         sudo update-alternatives --config javaws
+
+#INSTALLING GRADLE
+
+*   [Download](http://gradle.org/gradle-download/) either the gradle binary-only/all distribution, dont download the gradle source code distribution as it would require you to build the source.
+
+* Extract the zip file and add the environment variable GRADLE_HOME=your gradle installation home folder
+
+* Next add the path GRADLE_HOME/bin to the environment variable PATH by editing the /etc/profile file.
