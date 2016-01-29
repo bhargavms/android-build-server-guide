@@ -2,8 +2,9 @@
 Guide to building a proper android build server, for continous integration using Gitlab CI.
 
 #INSTALLING JDK
+(Taken from http://askubuntu.com/a/55960)
 
-# Install Java JDK
+##Install Java JDK
 
 ## The manual way
 
