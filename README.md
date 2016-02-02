@@ -93,6 +93,19 @@ Thought the procedure for installing jdk 7 and 8 is same, except you download di
 
 *   [Download](http://gradle.org/gradle-download/) either the gradle binary-only/all distribution, dont download the gradle source code distribution as it would require you to build the source.
 
-* Extract the zip file and add the environment variable GRADLE_HOME=your gradle installation home folder
+* Extract the zip file and add the environment variable GRADLE_HOME=your gradle installation home folder, in my case i unzipped it to /usr/local/gradle/grade-2.10
 
 * Next add the path GRADLE_HOME/bin to the environment variable PATH by editing the /etc/profile file.
+
+        sudo  nano /etc/profile
+
+   Add the the below lines similarly like adding the java env variables to profile.
+
+        GRADLE_HOME=/usr/local/gradle/gradle-2.10
+   Edit the below line with PATh to look like this
+
+        PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$GRADLE_HOME/bin
+
+   Then press `ctrl+o` to write out (save) `ctrl+x` to exit nano editor.
+
+Done you have successfully installed gradle.
