@@ -2,33 +2,54 @@
 Guide to building a proper android build server, for continous integration using Gitlab CI.
 
 #INSTALLING JDK
-(Taken from http://askubuntu.com/a/55960)
-
-##Install Java JDK
+Depending on compileSdkVersion you can compile java classes using jdk 7 or 8.
+Thought the procedure for installing jdk 7 and 8 is same, except you download different files (i recommend installing jdk7)
 
 ## The manual way
 
-*   [Download](http://www.oracle.com/technetwork/java/javase/downloads/index.html) the 32-bit or 64-bit Linux "compressed binary file" - it has a ".tar.gz" file extension.
+- Download JDK 7 from [oracle website](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
 
-*   Uncompress it
+   The file names follows below format
 
-    `tar -xvf jdk-8-linux-i586.tar.gz` (32-bit)
+        jdk-7u<version>-linux-x64.tar.gz
 
-    `tar -xvf jdk-8-linux-x64.tar.gz` (64-bit)
+   Where <version> is the update number currently the latest is 79.
 
-    The JDK 8 package is extracted into `./jdk1.8.0` directory. N.B.: Check carefully this folder name since Oracle seem to change this occasionally with each update.
+   So for 32bit version 79 linux OS it would be `jdk-7u79-linux-x86.tar.gz` and 64 bit it would be `jdk-7u79-linux-x64.tar.gz`
 
-*   Now move the JDK 8 directory to `/usr/lib`
+   So download the jdk depending on your linux os being 32bit or 64bit and the version of your choice.
 
-    <pre>sudo mkdir -p /usr/lib/jvm
-    sudo mv ./jdk1.8.0 /usr/lib/jvm/
-    </pre>
+- Unzip the downloaded tar.gz file
 
+        $ tar zxvf jdk-7u<version>-linux-x64.tar.gz
+
+   This command untar(uncompresses) the compressed folder and its contents
+
+   I would recommend unzipping it to `/usr/local/java`
+
+- For gradle you need to add `JAVA_HOME` and `JRE_HOME` environment variables
+   
+   Do `sudo gedit /etc/profile` or if you don't have a GUI but are running a terminal only version of linux OS, then do `sudo nano /etc/profile` I'm assuming you know how to use the nano editor if not google!
+
+   You need to add these lines at the bottom of the file
+
+        JAVA_HOME=/usr/local/java/jdk1.7.0_79
+        JRE_HOME=$JAVA_HOME/jre
+        PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+        export JAVA_HOME
+        export JRE_HOME
+        export PATH
+
+   press `ctrl+o` to write out, press `ctrl+x` to exit the nano editor.
+
+   reboot the OS.
+
+   (Taken from http://askubuntu.com/a/55960)
 *   Now run
 
-    <pre>sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.8.0/bin/java" 1
-    sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.8.0/bin/javac" 1
-    sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/usr/lib/jvm/jdk1.8.0/bin/javaws" 1
+    <pre>sudo update-alternatives --install "/usr/bin/java" "java" "/usr/local/java/jdk1.7.0_79/bin/java" 1
+    sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.7.0_79/bin/javac" 1
+    sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/usr/lib/jvm/jdk1.7.0_79/bin/javaws" 1
     </pre>
 
     This will assign Oracle JDK a priority of 1, which means that installing other JDKs will [replace it as the default](http://askubuntu.com/q/344059/23678). Be sure to use a higher priority if you want Oracle JDK to remain the default.
@@ -57,7 +78,7 @@ Guide to building a proper android build server, for continous integration using
         ------------------------------------------------------------
           0            /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java   1071      auto mode
           1            /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java   1071      manual mode
-        * 2            /usr/lib/jvm/jdk1.7.0/bin/java                   1         manual mode
+        * 2            /usr/local/java/jdk1.7.0_79/bin/java             1         manual mode
           3            /usr/lib/jvm/jdk1.8.0/bin/java                   1         manual mode
 
         Press enter to keep the current choice[*], or type selection number: 3
